@@ -678,3 +678,75 @@ proxy.apply({}, [5, 10]); // Proxy apply is invoked on target with context: [obj
 **References**
 
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+---
+### 21. Write a Throttled Function
+
+Throttling is a technique to ensure that a function is only executed once in a specified period, even if it is called multiple times. This is useful for optimizing functions triggered by high-frequency events like scrolling or resizing.
+
+```javascript
+
+// Throttle function
+function throttle(fn, delay) {
+  let lastCall = 0;
+  return function(...args) {
+    const now = Date.now();
+    if (now - lastCall >= delay) {
+      lastCall = now;
+      fn(...args);
+    }
+  };
+}
+
+// Driver code
+function logResizeEvent() {
+  console.log("Resize event logged at:", new Date().toLocaleTimeString());
+}
+
+const throttledResize = throttle(logResizeEvent, 2000);
+
+// Simulate rapid calls by resizing
+window.addEventListener("resize", throttledResize);
+```
+**Notes**
+
+Throttling is useful for limiting API calls or DOM manipulations that should only occur every few seconds, regardless of the number of events triggered.
+
+**References**
+
+- https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+---
+
+### 22. Implement a Debounced Function
+
+Debouncing is a technique to limit how frequently a function is executed. It’s useful for performance optimization, especially for functions that run frequently due to user actions (e.g., resizing, scrolling, or typing events).
+
+```javascript
+// Debounce function
+function debounce(fn, delay) {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), delay);
+  };
+}
+
+// Driver code
+function logMessage(message) {
+  console.log("Debounced Message:", message);
+}
+
+const debouncedLog = debounce(logMessage, 1000);
+
+// Simulating rapid calls
+debouncedLog("Hello"); // Only this call executes after 1 second if no more calls are made.
+debouncedLog("Hello again"); // This call resets the timer.
+setTimeout(() => debouncedLog("Final call"), 500); // This call will execute as the timer is cleared.
+```
+**Notes**
+
+Only the last call within the delay period will execute, which is useful in scenarios like search-as-you-type, where requests should not be fired immediately with every keystroke.
+
+**References**
+
+- https://developer.mozilla.org/en-US/docs/Web/API/setTimeout
+---
