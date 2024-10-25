@@ -503,7 +503,54 @@ if (!Array.prototype.reduce) {
   };
 }
 ```
-
 **Notes**
 
-The solution is a simple polyfill of `reduce` and not intended to handle all the corner scenarios
+  The solution is a simple polyfill of `reduce` and not intended to handle all the corner scenarios.
+
+---
+### 19. Explain WeakMap and WeakSet and their usage in JavaScript.
+
+WeakMap and WeakSet are special collections in JavaScript that allow for efficient garbage collection. They only hold "weak" references to their keys (for WeakMap) or values (for WeakSet), meaning they do not prevent garbage collection of the objects they reference.
+
+```javascript
+
+// Using WeakMap to associate data with DOM elements without preventing garbage collection
+const elementData = new WeakMap();
+const button = document.querySelector("#myButton");
+
+elementData.set(button, { clicked: true });
+console.log(elementData.get(button)); // { clicked: true }
+
+// Removing button from DOM also removes it from WeakMap as it’s garbage collected
+button.remove();
+```
+**References**
+
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
+
+---
+### 20. Write a function to flatten a nested array of arbitrary depth.
+
+Flattening an array removes nested arrays by bringing all elements into a single array. In JavaScript, you can achieve this with recursion or using built-in methods.
+
+**Requirements**
+
+Implement a function that takes an array with arbitrary nesting depth and returns a flattened array.
+Show both recursive and iterative solutions (if possible).
+Example Code:
+
+```javascript
+
+// Recursive flatten function
+function flatten(arr) {
+  return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), []);
+}
+
+// Example usage
+const nestedArray = [1, [2, [3, 4]], 5];
+console.log(flatten(nestedArray)); // [1, 2, 3, 4, 5]
+```
+
+**References**
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+---
