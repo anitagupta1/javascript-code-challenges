@@ -409,3 +409,65 @@ Sometimes, you might want to prevent an event from propagating to parent element
 
 - https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
 ---
+### 12. popstate Event for Managing History in SPAs
+
+The popstate event is used in SPAs to handle back and forward navigation.
+
+```html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Popstate Event Example</title>
+</head>
+<body>
+    <button onclick="navigate('/page1')">Go to Page 1</button>
+    <button onclick="navigate('/page2')">Go to Page 2</button>
+
+    <script>
+        function navigate(url) {
+            history.pushState({}, '', url);
+            console.log(`Navigated to ${url}`);
+        }
+
+        window.addEventListener('popstate', () => {
+            console.log(`Back or forward to: ${location.pathname}`);
+        });
+    </script>
+</body>
+</html>
+```
+**References**
+
+- https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
+---
+
+### 13. Passive Event Listeners for Scroll Optimization
+
+Using passive: true improves performance for scroll events, as the event is not allowed to be prevented.
+
+```html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passive Event Listener Example</title>
+</head>
+<body style="height: 2000px;">
+    <script>
+        window.addEventListener('scroll', () => {
+            console.log('Scrolled with passive event!');
+        }, { passive: true });
+    </script>
+</body>
+</html>
+```
+**References**
+
+- https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#passive
+
+---
+
